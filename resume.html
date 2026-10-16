@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  LOO SAY HIEN - RESUME SOURCE
+
+  >>> If you are an AI editing this: read START_HERE.md first. <<<
+      It is short. It tells you how to build, and when to ask
+      Loo a question instead of guessing.
+
+  Build:  bash build.sh
+
+  Quick rules:
+    - Entries are REVERSE CHRONOLOGICAL (newest first)
+    - Every <li> starts with <b>Term:</b>  (colon, NEVER an em dash)
+    - Design tokens live in the :root block below
+    - Never render without fix_links.py (build.sh handles it)
+  ============================================================
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: 'SG'; src: url('SchibstedGrotesk-Regular.ttf'); font-weight: 400; }
+@font-face { font-family: 'SG'; src: url('SchibstedGrotesk-Book.ttf');    font-weight: 450; }
+@font-face { font-family: 'SG'; src: url('SchibstedGrotesk-Medium.ttf');  font-weight: 500; }
+
+@page {
+    size: A4;
+    margin: 14mm 17mm 12mm 17mm;
+}
+
+:root {
+    /* ---- DESIGN TOKENS - change these to restyle the whole resume ---- */
+    --accent:      #5B21B6;   /* section labels, link text */
+    --link-rule:   #8B5FD6;   /* underline beneath links */
+    --rule:        #B9AED2;   /* all hairlines: horizontal rules + vertical rails */
+    --rule-weight: 0.7px;     /* thickness of every hairline */
+    --ink:         #1A1C21;   /* body text */
+    --ink-soft:    #4A4E55;   /* company names, contact strip */
+    --ink-mute:    #6B6F76;   /* dates, institutions */
+    --ink-faint:   #9AA0A8;   /* gutter domain tags, footer */
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'SG', sans-serif;
+    color: var(--ink);
+    font-size: 9.4pt;
+    line-height: 1.45;
+}
+
+a { color: var(--accent); text-decoration: none; border-bottom: var(--rule-weight) solid var(--link-rule); padding-bottom: 1.5px; }
+
+/* ---------- Masthead ---------- */
+.masthead {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 6px;
+}
+.name {
+    font-weight: 450;
+    font-size: 25pt;
+    letter-spacing: -0.6px;
+    line-height: 1;
+}
+.role {
+    font-size: 9.5pt;
+    color: #6B6F76;
+    letter-spacing: 2.4px;
+    text-transform: uppercase;
+    margin-top: 9px;
+}
+.photo { width: 62px; height: 62px; border-radius: 50%; object-fit: cover; }
+
+/* ---------- Contact strip ---------- */
+.contact {
+    display: flex;
+    gap: 22px;
+    font-size: 9pt;
+    color: #4A4E55;
+    padding: 6px 0 0 0;
+}
+
+/* ---------- Summary ---------- */
+.summary {
+    font-size: 9.8pt;
+    line-height: 1.55;
+    margin: 13px 0 2px 0;
+    max-width: 96%;
+}
+
+/* ---------- Section ---------- */
+.section { margin-top: 17px; }
+.section:first-of-type { margin-top: 30px; }
+.section-label {
+    font-size: 8.2pt;
+    font-weight: 500;
+    letter-spacing: 2.6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    padding-bottom: 6px;
+    border-bottom: var(--rule-weight) solid var(--rule);
+    margin-bottom: 11px;
+}
+
+/* ---------- Timeline entry ---------- */
+.entry {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 13px;
+    break-inside: avoid;
+}
+.entry:last-child { margin-bottom: 4px; }
+
+.gutter {
+    width: 88px;
+    flex-shrink: 0;
+    padding-top: 1px;
+}
+.gutter .yr {
+    font-size: 8.6pt;
+    color: #6B6F76;
+    line-height: 1.4;
+    letter-spacing: 0.2px;
+}
+.gutter .tagline {
+    font-size: 7.6pt;
+    color: #9AA0A8;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+}
+
+.body-col { flex: 1; }
+
+.job-title {
+    font-weight: 500;
+    font-size: 10.4pt;
+    line-height: 1.3;
+}
+.company {
+    font-size: 9.4pt;
+    color: #4A4E55;
+    margin-top: 2px;
+}
+.lede {
+    font-size: 9.2pt;
+    margin-top: 5px;
+    line-height: 1.45;
+}
+ul.points {
+    list-style: none;
+    margin-top: 7px;
+    border-left: var(--rule-weight) solid var(--rule);
+    padding-left: 13px;
+}
+ul.points li {
+    margin-top: 7px;
+    font-size: 9.2pt;
+    line-height: 1.45;
+}
+ul.points li:first-child { margin-top: 0; }
+ul.points li b { font-weight: 500; }
+
+.company-head {
+    font-weight: 500;
+    font-size: 10.4pt;
+    line-height: 1.3;
+}
+.role-block { margin-top: 8px; }
+.role-block:first-of-type { margin-top: 6px; }
+.role-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+}
+.role-name {
+    font-size: 9.5pt;
+    font-weight: 450;
+    color: #2E323A;
+}
+.role-dates {
+    font-size: 8.4pt;
+    color: #8A9098;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.promo-rail {
+    margin-top: 7px;
+}
+
+.contract-tag {
+    display: inline-block;
+    font-size: 7.4pt;
+    letter-spacing: 0.9px;
+    text-transform: uppercase;
+    color: #6B4BA8;
+    border: 0.6px solid #C4B0E8;
+    border-radius: 3px;
+    padding: 1px 5px;
+    vertical-align: 2px;
+    margin-left: 7px;
+    font-weight: 450;
+}
+
+/* ---------- Inline skill rows ---------- */
+.kv {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 6px;
+    break-inside: avoid;
+}
+.kv .k {
+    width: 88px;
+    flex-shrink: 0;
+    font-size: 7.8pt;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    color: #9AA0A8;
+    padding-top: 2px;
+}
+.kv .v {
+    flex: 1;
+    font-size: 9.4pt;
+    line-height: 1.55;
+}
+
+/* ---------- Education / case rows ---------- */
+.edu-grid { display: flex; flex-wrap: wrap; gap: 0 20px; }
+.edu-row { display: flex; gap: 12px; width: 47%; margin-bottom: 9px; break-inside: avoid; }
+.edu-row .when { width: 62px; flex-shrink: 0; font-size: 8.6pt; color: #6B6F76; padding-top: 1px; }
+.edu-row .what { flex: 1; }
+.edu-row .deg { font-weight: 500; font-size: 9.5pt; }
+.edu-row .inst { font-size: 8.9pt; color: #6B6F76; margin-top: 1px; }
+
+.case-grid { display: flex; flex-wrap: wrap; gap: 9px 20px; }
+.case-grid div { font-size: 9.3pt; width: 30%; }
+.work-row { margin-bottom: 7px; }
+.work-row .v { line-height: 1.9; }
+.work-row a { white-space: nowrap; }
+.work-row .sep { color: #9AA0A8; margin: 0 3px; }
+
+.foot {
+    margin-top: 16px;
+    padding-top: 0;
+    font-size: 8.4pt;
+    color: #9AA0A8;
+    display: flex;
+    justify-content: space-between;
+}
+</style>
+</head>
+<body>
+
+<!-- ================= MASTHEAD ================= -->
+<div class="masthead">
+    <div>
+        <div class="name">Loo Say Hien</div>
+        <div class="role">UI / UX Designer · Singapore</div>
+    </div>
+    <img class="photo" src="photo.png">
+</div>
+
+<div class="contact">
+    <span><a href="https://sayhien.framer.website/">sayhien.framer.website</a></span>
+    <span><a href="mailto:sayhien@gmail.com">sayhien@gmail.com</a></span>
+    <span><a href="tel:+6587777862">+65 8777 7862</a></span>
+    <span><a href="https://www.linkedin.com/in/loo-say-hien-05094260/">LinkedIn</a></span>
+</div>
+
+<div class="summary">
+    UI/UX Designer with nine years of experience crafting efficient solutions that bridge user needs and business goals. Proficient in translating dense data and complex regulatory frameworks into intuitive, scalable interfaces.
+</div>
+
+<!-- ================= EXPERIENCE =================
+     Each job = one <div class="entry">. Newest first.
+     Multi-role companies: one .company-head + several .role-block
+-->
+<div class="section">
+    <div class="section-label">Experience</div>
+
+    <div class="entry">
+        <div class="gutter">
+            <div class="yr">Sep 2025 —<br>Present</div>
+            <div class="tagline">Multi-Industry</div>
+        </div>
+        <div class="body-col">
+            <div class="job-title">Content Creator &amp; Freelance UX Designer</div>
+            <ul class="points">
+                <li><b>Content Creation:</b> Using AI-native workflow for content creation, focusing on humorous storytelling and motion graphic to simplify the health niche and to keep viewers engaged.</li>
+                <li><b>Website Design:</b> Building premium, responsive websites using Framer and Claude Code, handling full-cycle production from layout to high-fidelity animations, AI coded sandbox demos for better understanding of any particular service.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="entry">
+        <div class="gutter">
+            <div class="yr">Feb 2025 —<br>Apr 2025</div>
+            <div class="tagline">Sustainability</div>
+        </div>
+        <div class="body-col">
+            <div class="job-title">UI/UX Designer<span class="contract-tag">Contract</span></div>
+            <div class="company">Tomie Technologies Pte Ltd</div>
+            <div class="lede">Led the design of an Environmental, Social, and Governance (ESG) module within an ERP system to assist SMEs in monitoring sustainability metrics.</div>
+            <ul class="points">
+                <li><b>Regulatory Frameworks:</b> Developed unified UI templates for extensive frameworks such as GRI and IFRS, enabling engineering teams to scale complex reporting requirements.</li>
+                <li><b>Data Visualisation:</b> Designed a high-density dashboard featuring compliance confidence metrics, real-time progress trackers, and user workload management tools.</li>
+                <li><b>System Efficiency:</b> Created and managed a dedicated design library using auto-layout components to streamline the development of reporting features.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="entry">
+        <div class="gutter">
+            <div class="yr">Sep 2020 —<br>Apr 2024</div>
+            <div class="tagline">Healthcare · Insurance</div>
+        </div>
+        <div class="body-col">
+            <div class="company-head">DocDoc Pte Ltd</div>
+
+            <div class="promo-rail">
+                <div class="role-block">
+                    <div class="role-line">
+                        <div class="role-name">Senior UI/UX Designer</div>
+                        <div class="role-dates">Apr 2022 – Apr 2024</div>
+                    </div>
+                    <ul class="points">
+                        <li><b>Insurance:</b> Worked hand-in-hand with product and engineering to design a new enterprise and consumer health insurance app from scratch, covering account management, claims processing, policy administration, and more, delivering a unified experience across both portals.</li>
+                        <li><b>Design Governance:</b> Built a scalable design system (Angular Material), aligning it with logical data models and cross-department docs for system-wide consistency.</li>
+                    </ul>
+                </div>
+
+                <div class="role-block">
+                    <div class="role-line">
+                        <div class="role-name">UI/UX Designer</div>
+                        <div class="role-dates">Sep 2020 – Mar 2022</div>
+                    </div>
+                    <ul class="points">
+                        <li><b>Doctor Discovery:</b> Conducted user research with member reps to uncover pain points, then redesigned their report-generation workflow, cutting steps across a fragmented process.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="entry">
+        <div class="gutter">
+            <div class="yr">May 2020 —<br>Jul 2020</div>
+            <div class="tagline">Healthcare</div>
+        </div>
+        <div class="body-col">
+            <div class="job-title">UX Designer<span class="contract-tag">Contract</span></div>
+            <div class="company">Doctor World Pte Ltd</div>
+            <div class="lede">Redesigned the consumer app UI, working with the general manager and software developers.</div>
+            <ul class="points">
+                <li><b>Telemedicine:</b> Covered telemedicine appointment booking, dispensed medicine tracking with delivery status, appointment booking at Raffles Medical branches, access to medical certificates, and more.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="entry">
+        <div class="gutter">
+            <div class="yr">Jun 2017 —<br>Jun 2019</div>
+            <div class="tagline">Fintech</div>
+        </div>
+        <div class="body-col">
+            <div class="job-title">UI/UX Designer</div>
+            <div class="company">Plus65 Interactive Pte Ltd</div>
+            <div class="lede">Designed investment and remittance apps.</div>
+            <ul class="points">
+                <li><b>Investment Systems:</b> Led the design for multiple white-label affiliate finance investment platforms for China-based clients, covering administrative portals, member portals with investment credit purchase paths, and marketing websites.</li>
+                <li><b>Remittance Ecosystem:</b> Designed a remittance system called Swipe, including a customer-facing mobile app with a KYC onboarding path.</li>
+                <li><b>User Research:</b> Initiated user research programs that raised stakeholder awareness of target audience needs and provided actionable deliverables to guide product vision.</li>
+                <li><b>Hospitality Design:</b> Collaborated on user research and interface design for the Zazz Hotels platform.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="entry">
+        <div class="gutter">
+            <div class="yr">Apr 2016 —<br>Jan 2017</div>
+            <div class="tagline">Property</div>
+        </div>
+        <div class="body-col">
+            <div class="job-title">UI/UX Designer</div>
+            <div class="company">Singmap Pte Ltd</div>
+            <div class="lede">Designed apps for the construction and building industries.</div>
+            <ul class="points">
+                <li><b>Construction Tech:</b> Designed a 3D Building Information Modeling (BIM) app that serves as a repository for accurate 3D models used by architects and contractors.</li>
+                <li><b>Immersive Media:</b> Led UI design for an augmented reality (AR) property showroom app (Mixgo) and a condominium app (Singnect) for facilities reservations, bill payments, and more.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="entry">
+        <div class="gutter">
+            <div class="yr">Mar 2014 —<br>May 2015</div>
+            <div class="tagline">eCommerce</div>
+        </div>
+        <div class="body-col">
+            <div class="job-title">Web &amp; Graphic Designer</div>
+            <div class="company">Immensinc Pte Ltd</div>
+            <ul class="points">
+                <li><b>Digital Marketing:</b> Managed social media strategies and designed eCommerce web solutions for various beauty and F&amp;B brands.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- ================= CAPABILITIES ================= -->
+<div class="section">
+    <div class="section-label">Capabilities</div>
+
+    <div class="kv">
+        <div class="k">Research</div>
+        <div class="v">User Interview · Persona · Journey Map · Storyboard · Usability Test</div>
+    </div>
+    <div class="kv">
+        <div class="k">Design</div>
+        <div class="v">User Flow · Information Hierarchy · Wireframe · Mockup · Prototype · Design Library · Data Visualisation · Motion Graphic</div>
+    </div>
+    <div class="kv">
+        <div class="k">Tools</div>
+        <div class="v">Figma · Framer · Adobe Creative Suite · Claude · Pippit</div>
+    </div>
+    <div class="kv">
+        <div class="k">Domains</div>
+        <div class="v">Sustainability · Healthcare · Insurance · Fintech · Property</div>
+    </div>
+</div>
+
+<!-- ================= CASE STUDIES =================
+     Two rows: portfolio case studies, then self initiated redesigns
+     (live sites, no case study yet). Links are nowrap so none split.
+-->
+<div class="section">
+    <div class="section-label">Selected Work</div>
+    <div class="kv work-row">
+        <div class="k">Case Studies</div>
+        <div class="v"><a href="https://sayhien.framer.website/esg-reporting-module#introduction">ESG Reporting Module</a> <span class="sep">·</span> <a href="https://sayhien.framer.website/docdoc-healthcare-report#introduction">Healthcare Report Flow</a> <span class="sep">·</span> <a href="https://sayhien.framer.website/swipe-remittance-app#introduction">Swipe Remittance App</a> <span class="sep">·</span> <a href="https://sayhien.framer.website/docdoc-library#introduction-docdoc-library">Angular Material Design Library</a> <span class="sep">·</span> <a href="https://sayhien.framer.website/ai-chatbot#introduction">AI Chatbot Service Page</a></div>
+    </div>
+    <div class="kv work-row">
+        <div class="k">Redesigns</div>
+        <div class="v"><a href="https://sayhien.github.io/5-oars-coffee/">Five Oars Coffee Roasters</a> <span class="sep">·</span> <a href="https://sayhien.github.io/four-leaves-redesign/">Four Leaves</a><span class="contract-tag">Self Initiated</span></div>
+    </div>
+    <div class="kv work-row">
+        <div class="k">Challenge</div>
+        <div class="v"><a href="https://sayhien.github.io/avient-sales-rep-tool/links/">Avient Sales Rep CRM Tool</a><span class="contract-tag">Design Challenge</span></div>
+    </div>
+</div>
+
+<!-- ================= EDUCATION ================= -->
+<div class="section">
+    <div class="section-label">Education</div>
+
+    <div class="edu-grid">
+        <div class="edu-row">
+            <div class="when">Feb 2025</div>
+            <div class="what">
+                <div class="deg">Interaction Design Specialization</div>
+                <div class="inst">UC San Diego · Coursera</div>
+            </div>
+        </div>
+        <div class="edu-row">
+            <div class="when">Sep 2024</div>
+            <div class="what">
+                <div class="deg">Google UX Design Specialization</div>
+                <div class="inst">Google · Coursera</div>
+            </div>
+        </div>
+        <div class="edu-row">
+            <div class="when">2008 – 2011</div>
+            <div class="what">
+                <div class="deg">Diploma in Industrial Design</div>
+                <div class="inst">Nanyang Polytechnic</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="foot">
+    <span>Loo Say Hien — UI/UX Designer</span>
+    <span>sayhien.framer.website</span>
+</div>
+
+</body>
+</html>
