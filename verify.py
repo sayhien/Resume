@@ -59,7 +59,7 @@ def main(path):
     # Legitimate em dashes: date ranges ("Sep 2025 —") and the footer byline.
     # Flag only em dashes that look like a bullet-term separator.
     ALLOW = ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
-             "Sep", "Oct", "Nov", "Dec", "Present", "UI/UX Designer")
+             "Sep", "Oct", "Nov", "Dec", "Present", "UI/UX Designer", "User Experience Designer")
     for pno in range(npages):
         for line in doc[pno].get_text().splitlines():
             if "—" not in line:
