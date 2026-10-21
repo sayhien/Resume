@@ -15,10 +15,10 @@ he knows the record is changing.
 | Bold weight 600 / 700 for headings | **Too heavy.** Settled on 450. |
 | 1px+ hairlines | **Too prominent.** Settled on 0.7px. |
 | 0.5px hairlines | **Too faint.** 0.7px is the answer. |
-| Thick purple rail grouping the DocDoc roles | **Rejected.** Roles sit flush left instead. |
+| Thick coloured rail grouping the DocDoc roles | **Rejected.** Roles sit flush left instead. |
 | Solid lines that looked dotted-but-dense | He wants dots clearly separated if dotted at all. Currently solid. |
 | Separate vertical rails per bullet | **Rejected.** One continuous rail per group. |
-| Grey horizontals + purple verticals (mismatched) | **Rejected.** All rules share one colour and weight. |
+| Grey horizontals + coloured verticals (mismatched) | **Rejected.** All rules share one colour and weight. |
 | Heavy rule under the name / under the contact strip | **Removed.** |
 | Rule above the page-2 footer | **Removed.** |
 
@@ -28,10 +28,10 @@ he knows the record is changing.
 
 - **Two pages.** Not one, not three, unless he says so.
 - **Reverse chronological** everywhere — experience and education.
-- **Hairlines:** 0.7px, `#B9AED2`, identical for horizontal rules and
+- **Hairlines:** 0.7px, `#9ADEC0`, identical for horizontal rules and
   vertical rails.
-- **Accent:** `#5B21B6`. Used for section labels and link text only.
-- **Link underlines:** visible, `#8B5FD6`, with offset from the text.
+- **Accent:** `#047857`. Used for section labels and link text only.
+- **Link underlines:** visible, `#6EE7B7`, with offset from the text.
   He specifically complained when these were too subtle.
 - **Every bullet** leads with a bold 1–2 word Title Case term + colon.
 - **Gutter tags are domains** (Healthcare, Fintech, Property), never

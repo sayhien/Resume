@@ -48,9 +48,9 @@ Run from inside this folder so fonts and the photo resolve.
 individual rules scattered through the CSS:
 
 ```css
---accent:      #5B21B6;   /* section labels, link text */
---link-rule:   #8B5FD6;   /* underline beneath links */
---rule:        #B9AED2;   /* all hairlines */
+--accent:      #047857;   /* section labels, link text */
+--link-rule:   #6EE7B7;   /* underline beneath links */
+--rule:        #9ADEC0;   /* all hairlines */
 --rule-weight: 0.7px;     /* thickness of every hairline */
 ```
 
