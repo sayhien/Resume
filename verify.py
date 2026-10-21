@@ -15,7 +15,7 @@ import sys
 import pymupdf
 
 EXPECTED_PAGES = (1, 2)
-EXPECTED_LINKS = 12
+EXPECTED_LINKS = 13
 
 
 def main(path):
